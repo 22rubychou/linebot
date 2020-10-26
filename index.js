@@ -17,12 +17,12 @@ const bot = linebot({
 
 bot.on('message', async event => {
   try {
-    const response = await axios.get('https://cloud.culture.tw/frontsite/trans/SearchShowAction.do?method=doFindTypeJ&category=6')
+    const response = await axios.get('https://cloud.culture.tw/frontsite/trans/emapOpenDataAction.do?method=exportEmapJson&typeId=M')
     const text = event.message.text
     let reply = ''
     for (const data of response.data) {
-      if (data.title === text) {
-        reply = data.showInfo[0].locationName
+      if (data.name === text) {
+        reply = data.address
         break
       }
     }
