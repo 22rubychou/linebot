@@ -15,7 +15,6 @@ bot.on('message', async event => {
   const response = await axios.get('https://gis.taiwan.net.tw/XMLReleaseALL_public/restaurant_C_f.json')
   try {
     const text = event.message.text
-    let msg = []
     let reply = []
 
     for (const data of response.data.XML_Head.Infos.Info) {
@@ -47,81 +46,10 @@ bot.on('message', async event => {
         }
       }
 
-      // if (data.Name + '/介紹' === text) {
-      //   // reply.push({ type: 'text', text: data.Description })
-      //   reply = data.Description
-      // } else if (data.Name + '/位址' === text) {
-      //   reply = data.Add
-      // } else if (data.Name + '/照片' === text) {
-      //   reply = data.Picture1
-      // } else if (data.Name + '/詳細' === text) {
-      //   flex.body.contents.push(
-      //     {
-      //       "type": "text",
-      //       "text": data.Name,
-      //       "weight": "bold",
-      //       "size": "xl"
-      //     },
-      //     {
-      //       "type": "box",
-      //       "layout": "vertical",
-      //       "margin": "lg",
-      //       "spacing": "sm",
-      //       "contents": [
-      //         {
-      //           "type": "box",
-      //           "layout": "baseline",
-      //           "spacing": "sm",
-      //           "contents": [
+      if (data.Name + '/介紹' === text) {
+        reply.push({ type: 'text', text: data.Description })
+      }
 
-      //             {
-      //               "type": "text",
-      //               "text": data.Add,
-      //               "wrap": true,
-      //               "color": "#666666",
-      //               "size": "sm",
-      //               "flex": 5
-      //             }
-      //           ]
-      //         }
-      //       ]
-      //     },
-      //     {
-      //       "type": "box",
-      //       "layout": "baseline",
-      //       "spacing": "sm",
-      //       "contents": [
-      //         {
-      //           "type": "text",
-      //           "text": data.Opentime,
-      //           "wrap": true,
-      //           "color": "#666666",
-      //           "size": "sm",
-      //           "flex": 5
-      //         }
-      //       ]
-      //     })
-      //   flex.hero = {
-      //     "type": "image",
-      //     "url": data.Picture1,
-      //     "size": "full",
-      //     "aspectRatio": "20:13",
-      //     "aspectMode": "cover",
-      //     "action": {
-      //       "type": "uri",
-      //       "uri": "http://linecorp.com/"
-      //     }
-      //   }
-
-      //   reply.push({
-      //     type: 'flex',
-      //     altText: `查詢的結果`,
-      //     contents: {
-      //       type: 'carousel',
-      //       contents: [flex]
-      //     }
-      //   })
-      // }
       let array = []
       array = text.split('$')
       if (array.length == 1) {
@@ -190,7 +118,7 @@ bot.on('message', async event => {
           }
 
 
-          msg.push({
+          reply.push({
             type: 'flex',
             altText: `查詢的結果`,
             contents: {
@@ -198,8 +126,8 @@ bot.on('message', async event => {
               contents: [flex]
             }
           })
-          event.reply(msg)
-          if (reply.length >= 3) {
+          event.reply(reply)
+          if (reply.length >= 5) {
             break
           }
 
@@ -271,7 +199,7 @@ bot.on('message', async event => {
           }
 
 
-          msg.push({
+          reply.push({
             type: 'flex',
             altText: `查詢的結果`,
             contents: {
@@ -279,8 +207,8 @@ bot.on('message', async event => {
               contents: [flex]
             }
           })
-          event.reply(msg)
-          if (reply.length >= 3) {
+          event.reply(reply)
+          if (reply.length >= 5) {
             break
           }
 
@@ -352,7 +280,7 @@ bot.on('message', async event => {
           }
 
 
-          msg.push({
+          reply.push({
             type: 'flex',
             altText: `查詢的結果`,
             contents: {
@@ -360,8 +288,8 @@ bot.on('message', async event => {
               contents: [flex]
             }
           })
-          event.reply(msg)
-          if (reply.length >= 3) {
+          event.reply(reply)
+          if (reply.length >= 5) {
             break
           }
 
@@ -433,7 +361,7 @@ bot.on('message', async event => {
           }
 
 
-          msg.push({
+          reply.push({
             type: 'flex',
             altText: `查詢的結果`,
             contents: {
@@ -441,24 +369,27 @@ bot.on('message', async event => {
               contents: [flex]
             }
           })
-          event.reply(msg)
-          if (reply.length >= 3) {
+          event.reply(reply)
+          if (reply.length >= 5) {
             break
           }
 
         }
       }
+      if (text == "test") {
+        reply = "test success"
+      }
     }
-
-
-
 
     if (reply.length === 0) {
       reply = '沒有店家喔！要不要試著擴大範圍找找看呢?'
     }
-    event.reply(msg)
+    event.reply(reply)
+
+
   } catch (error) {
-    reply.push({ type: 'text', text: '程式錯誤' })
+    reply = '程式錯誤'
+
   }
 
 })
