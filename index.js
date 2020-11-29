@@ -49,6 +49,13 @@ bot.on('message', async event => {
       if (data.Name + '/介紹' === text) {
         reply.push({ type: 'text', text: data.Description })
       }
+      if (data.Name + '/訂位' === text) {
+        if (data.Tel !== '') {
+          reply.push({ type: 'text', text: data.Tel })
+        } else {
+          reply = '沒有訂位電話喔'
+        }
+      }
 
       let array = []
       array = text.split('$')
